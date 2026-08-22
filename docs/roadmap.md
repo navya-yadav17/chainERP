@@ -1,21 +1,21 @@
 # chainERP Roadmap
 
-This document outlines the high-level milestones and timeline for chainERP. Dates and priorities are placeholders — please update with project-specific deadlines.
+This document outlines milestones now aligned to the chosen stack: Solidity contracts, Spring Boot backend, and React frontend.
 
 ## Goals
-- Produce a working MVP integrating smart contracts, backend APIs, and a web frontend.
-- Enable core ERP flows: inventory, orders, invoicing, and supply-chain auditability.
+- Deliver an MVP with on-chain auditable flows for treasury, payroll, and subscriptions.
 
-## Milestones
-- Discovery & architecture (complete)
-- Smart contract prototyping (in progress)
-- Backend API implementation
-- Frontend UI for core flows
-- Integration testing (contracts ↔ backend ↔ frontend)
-- Security audit & performance tuning
-- Deployment and monitoring
+## Milestones (suggested order)
+1. Project setup & tooling (Hardhat, Spring Boot scaffold, React scaffold)
+2. Smart contract design: Treasury, Payroll hooks, SubscriptionManager
+3. Backend: implement Spring Boot services for Treasury, Payroll, Subscriptions, RBAC, and event ingestion
+4. Indexer: implement event indexer (The Graph or custom) and `contract_events` table
+5. Frontend: implement React UI for finance/HR dashboards and subscription management
+6. Integration testing and E2E (local & testnet)
+7. Security audits (contracts + backend), compliance checks for payroll
+8. Production deployment and monitoring
 
 ## Notes / Next actions
-- Replace milestone dates with sprint-based targets.
-- Add owners for each milestone.
+- Assign owners for each milestone and add sprint dates.
+- Prepare audit budget and testnet deployment plan.
 

@@ -1,20 +1,30 @@
-# Smart Contracts
+# Smart Contracts (Solidity)
 
-Location: `contracts/` contains smart contract sources and test harnesses. This page documents the repository layout, testing and deployment suggestions.
+Contracts are written in Solidity and live in `contracts/`. Use Hardhat as the development toolchain (recommended) with plugins for testing and ABI generation.
 
-## Suggested tools
-- Development: Hardhat or Truffle
-- Testing: Mocha/Chai (JS) or Foundry (Rust-based) depending on language
-- Deployment: scripts under `contracts/src/test/scripts` — standardize to a single toolchain.
+## Recommended contracts (by module)
+- `Treasury.sol` — handles fund custody, transfers, and role-based treasury operations
+- `Payroll.sol` — minimal on-chain hooks for payroll settlement or attestations
+- `SubscriptionManager.sol` — stores subscription entitlements and emits events on renew/expire
+- `ERPEvents.sol` — shared event definitions for off-chain indexing
 
-## Repository layout (expected)
-- `contracts/src` — contract sources
-- `contracts/src/test` — unit/integration tests
-- `contracts/src/test/scripts` — deployment/test scripts
+## Tooling
+- Hardhat for compilation, testing, and deployments
+- Ethers.js for scripts and tests
+- Mocha/Chai for unit tests
+- Export ABIs to `contracts/abi/` for backend consumption
+
+## Events (example)
+- `event TransferRecorded(address indexed from, address indexed to, uint256 amount, uint256 timestamp)`
+- `event PayrollRun(uint256 indexed runId, uint256 totalAmount, uint256 timestamp)`
+- `event SubscriptionRenewed(bytes32 indexed subscriptionId, address subscriber, uint256 timestamp)`
+
+## Testing & Deployment
+- Keep deployment scripts deterministic and environment-aware (rinkeby/localhost/mainnet). Use environment variables for private keys and RPC endpoints.
 
 ## Security
-- Add a security checklist and plan a third-party audit before mainnet deployment.
+- Run a security checklist: unit tests, coverage, fuzzing, and plan a third-party audit before production.
 
 ## TODO
-- Add concrete contract names, interfaces, and ABI export instructions.
+- Add exact contract interfaces, solidity versions, and ABI export steps.
 

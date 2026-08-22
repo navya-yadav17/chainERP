@@ -1,23 +1,39 @@
 # Architecture Overview
 
-This document describes the intended architecture for chainERP at a high level. Replace placeholders with the concrete technologies used in this repository.
+This document describes the chainERP architecture and the chosen stack for this repository.
+
+## Chosen stack
+- Frontend: React (Single Page Application)
+- Backend: Spring Boot (Java) with Spring Security for RBAC
+- Smart contracts: Solidity, developed and tested with Hardhat
+- Database: PostgreSQL (primary transactional store)
+- Event indexing: The Graph or a custom indexer that writes to an `events` table
+- Async/queue: Kafka or RabbitMQ for integration and background jobs
 
 ## High-level components
-- Frontend: single-page application (React/Vue/Angular)
-- Backend: REST/GraphQL API (Node/Express, FastAPI, or similar)
-- Smart contracts: on-chain business logic placed under `/contracts`
-- Database: relational DB (Postgres recommended) for core state
-- Integration: background workers and message queues for async tasks
+- `frontend/` — React app communicating with backend via REST (or GraphQL)
+- `backend/` — Spring Boot application exposing `/api/*` endpoints and handling business logic
+- `contracts/` — Solidity contracts, tests, and deployment scripts
+- `database` — Postgres schemas and migration files (Flyway/Liquibase recommended)
+- `indexer` — event-indexing service (optional folder / service)
 
-## Data flow
-1. User interacts with frontend
-2. Frontend calls backend APIs
-3. Backend validates and persists state to DB
-4. On-chain actions are sent to smart contracts; results are reconciled back into the DB
+## Core modules
+- Treasury: on-chain & off-chain flows for funds management
+- Payroll: payroll runs and on-chain settlement where applicable
+- Subscriptions: billing, renewal, and on-chain subscription records
+- Event indexing: listen to contract events and reconcile into DB for fast queries
 
-## Diagrams
-- See `diagrams/` for system and sequence diagrams. Update diagrams to reflect finalized tech choices.
+## Data flow (detailed)
+1. User interacts with React frontend.
+2. Frontend calls Spring Boot APIs (authenticated via JWT/OAuth2).
+3. APIs persist domain state to Postgres and enqueue async jobs when needed.
+4. For on-chain operations, backend submits transactions to Ethereum-compatible nodes via a signer service.
+5. Contracts emit events; the indexer ingests events and writes normalized rows back to Postgres.
+
+## Deployment
+- Recommend containerized services (Docker) and orchestration (Kubernetes) for production.
+- Secrets: manage private keys and node RPC credentials using a secure vault (HashiVault, AWS Secrets Manager).
 
 ## TODO
-- Document chosen stack versions and deployment topology (K8s, managed services, etc.).
+- Add deployment diagrams under `diagrams/` and record cluster sizing and backups.
 
