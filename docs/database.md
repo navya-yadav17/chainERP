@@ -23,12 +23,15 @@ Primary datastore: PostgreSQL. Use Flyway or Liquibase for schema migrations and
 
 ## Event indexing
 - `contract_events`
-	- `id`, `contract_name`, `event_name`, `tx_hash`, `log_index`, `block_number`, `indexed_at`, `payload_json`
+	- `id`, `chain_id`, `contract_name`, `contract_address`, `event_name`, `transaction_hash`, `log_index`, `block_number`, `block_hash`, `indexed_at`, `payload_json`
+- `indexer_cursors`
+	- `chain_id`, `contract_name`, `contract_address`, `last_processed_block`, `last_processed_block_hash`, `updated_at`
+- `indexer_checkpoints`
+	- `chain_id`, `contract_address`, `block_number`, `block_hash`
 
 ## Recommendations
 - Store minimal on-chain references (tx hash, contract address) and reconcile with the DB using the indexer.
 - Encrypt sensitive fields and use column-level policies for access control where needed.
 
 ## TODO
-- Create ER diagrams and add migration templates under `backend/src/main/resources/db/migration`.
-
+- Create ER diagrams for the application data model.

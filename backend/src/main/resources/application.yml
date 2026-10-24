@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/chainerp}
+    username: ${SPRING_DATASOURCE_USERNAME:chainerp}
+    password: ${SPRING_DATASOURCE_PASSWORD:chainerp}
+  flyway:
+    enabled: true
+
+indexer:
+  rpc-url: ${INDEXER_RPC_URL:}
+  start-block: ${INDEXER_START_BLOCK:0}
+  confirmations: ${INDEXER_CONFIRMATIONS:3}
+  chunk-size: ${INDEXER_CHUNK_SIZE:2000}
+  poll-interval-ms: ${INDEXER_POLL_INTERVAL_MS:5000}
+  contracts:
+    treasury: ${TREASURY_CONTRACT_ADDRESS:}
+    payroll: ${PAYROLL_CONTRACT_ADDRESS:}
+    subscriptionManager: ${SUBSCRIPTION_MANAGER_CONTRACT_ADDRESS:}

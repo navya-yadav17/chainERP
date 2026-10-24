@@ -35,10 +35,12 @@ Backend: Spring Boot REST APIs under the `/api/v1` prefix. Use OpenAPI/Swagger g
 
 ## Event indexing API
 - `GET /api/v1/events/contracts/{contract}/events` — paginated contract events
+  - Query parameters: `page` (zero-based, default `0`) and `size` (default `50`, maximum `100`).
+  - The initial backend implementation stores raw event topics and data in `payload_json`.
+  - This endpoint does not yet enforce the JWT/RBAC policy described above; protect it before production use.
 
 ## Error handling
 - Use a consistent JSON error envelope: `{ "error": { "code": "", "message": "", "details": {} } }`.
 
 ## TODO
 - Add request/response DTOs and example `curl` snippets; generate OpenAPI spec from code.
-

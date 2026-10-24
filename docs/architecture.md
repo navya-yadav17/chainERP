@@ -12,7 +12,7 @@ This document describes the chainERP architecture and the chosen stack for this 
 
 ## High-level components
 - `frontend/` — React app communicating with backend via REST (or GraphQL)
-- `backend/` — Spring Boot application exposing `/api/*` endpoints and handling business logic
+- `backend/` — Spring Boot application exposing `/api/*` endpoints, initially including the contract event indexer and query API
 - `contracts/` — Solidity contracts, tests, and deployment scripts
 - `database` — Postgres schemas and migration files (Flyway/Liquibase recommended)
 - `indexer` — event-indexing service (optional folder / service)
@@ -30,10 +30,11 @@ This document describes the chainERP architecture and the chosen stack for this 
 4. For on-chain operations, backend submits transactions to Ethereum-compatible nodes via a signer service.
 5. Contracts emit events; the indexer ingests events and writes normalized rows back to Postgres.
 
+The initial custom indexer polls configured contracts through an EVM JSON-RPC endpoint, waits for the configured confirmation depth, and stores raw event topics/data in PostgreSQL. It persists per-contract cursors and block checkpoints for restart-safe ingestion and reorganization recovery.
+
 ## Deployment
 - Recommend containerized services (Docker) and orchestration (Kubernetes) for production.
 - Secrets: manage private keys and node RPC credentials using a secure vault (HashiVault, AWS Secrets Manager).
 
 ## TODO
 - Add deployment diagrams under `diagrams/` and record cluster sizing and backups.
-

@@ -15,7 +15,10 @@ This document outlines milestones now aligned to the chosen stack: Solidity cont
 7. Security audits (contracts + backend), compliance checks for payroll
 8. Production deployment and monitoring
 
+## Progress
+- Initial custom Spring Boot/PostgreSQL event indexer scaffold added under `backend/`: confirmed-block polling, duplicate-safe event storage, cursor tracking, and a paginated query endpoint.
+- Remaining backend work includes domain services, JWT/RBAC, and production deployment configuration.
+
 ## Notes / Next actions
 - Assign owners for each milestone and add sprint dates.
 - Prepare audit budget and testnet deployment plan.
-
