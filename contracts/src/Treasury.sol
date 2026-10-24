@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 contract Treasury {
-    address public admin;
+    address public immutable admin;
 
     event TransferRecorded(address indexed from, address indexed to, uint256 amount, uint256 timestamp);
 
@@ -12,10 +12,19 @@ contract Treasury {
     }
 
     constructor(address _admin) {
+        require(_admin != address(0), "invalid admin");
         admin = _admin;
     }
 
-    function recordTransfer(address to, uint256 amount) external onlyAdmin {
-        emit TransferRecorded(msg.sender, to, amount, block.timestamp);
+    receive() external payable {}
+
+    function transferTo(address payable to, uint256 amount) external onlyAdmin {
+        require(to != address(0), "invalid recipient");
+        require(amount > 0, "amount must be greater than zero");
+
+        (bool success, ) = to.call{value: amount}("");
+        require(success, "transfer failed");
+
+        emit TransferRecorded(address(this), to, amount, block.timestamp);
     }
 }
