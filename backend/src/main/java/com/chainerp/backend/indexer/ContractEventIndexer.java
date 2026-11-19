@@ -118,7 +118,7 @@ public class ContractEventIndexer {
         if (response.hasError()) {
             throw new IOException("eth_getLogs failed: " + rpcError(response.getError()));
         }
-        List<EthLog.LogResult<?>> results = response.getLogs();
+        var results = response.getLogs();
         if (results == null) {
             throw new IOException("eth_getLogs returned no result");
         }

@@ -19,6 +19,13 @@ public class ApiExceptionHandler {
         ));
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException exception) {
+        return ResponseEntity.badRequest().body(new ApiErrorResponse(
+            new ApiError("CLIENT_ERROR", exception.getMessage(), Map.of())
+        ));
+    }
+
     public record ApiErrorResponse(ApiError error) {
     }
 

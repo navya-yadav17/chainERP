@@ -6,6 +6,16 @@ spring:
   flyway:
     enabled: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+security:
+  jwt-secret: ${CHAINERP_JWT_SECRET:change-this-development-secret-before-production-use}
+  access-token-minutes: ${CHAINERP_ACCESS_TOKEN_MINUTES:30}
+
 indexer:
   rpc-url: ${INDEXER_RPC_URL:}
   start-block: ${INDEXER_START_BLOCK:0}

@@ -27,7 +27,9 @@ Backend: Spring Boot REST APIs under the `/api/v1` prefix. Use OpenAPI/Swagger g
 - Subscriptions
 	- `POST /api/v1/subscriptions` — create subscription
 	- `POST /api/v1/subscriptions/{id}/renew` — renew subscription
+	- `POST /api/v1/subscriptions/{id}/cancel` — cancel subscription
 	- `GET /api/v1/subscriptions/{id}` — subscription details
+	- `GET /api/v1/subscriptions` — list subscriptions
 
 - Contracts / On-chain
 	- `POST /api/v1/contracts/tx` — submit signed transaction (service role)
